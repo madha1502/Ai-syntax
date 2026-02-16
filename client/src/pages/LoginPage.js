@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./login.css";
 import bg from "../assets/bg-red-forest.jpg";
+import { API } from "../api";   // ✅ ADDED
 
 function LoginPage() {
   const [isAdmin, setIsAdmin] = useState(false);
@@ -22,7 +23,7 @@ function LoginPage() {
     }
 
     // 👥 TEAM LOGIN
-    fetch("z/api/auth/login", {
+    fetch(`${API}/api/auth/login`, {   // ✅ UPDATED
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
