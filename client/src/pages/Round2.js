@@ -3,6 +3,7 @@ import "./Round2.css";
 import { useNavigate } from "react-router-dom";
 import logoLeft from "../assets/de1.png";
 import logoRight from "../assets/dee1.png";
+import { API as BASE_API } from "../api";   // ✅ ADDED
 
 function Round2() {
 
@@ -17,7 +18,7 @@ function Round2() {
   const [uploading, setUploading] = useState(false);
 
   // ===== BASE URL (Proxy OR ENV) =====
-  const API = process.env.REACT_APP_API_URL || "";
+  const API = process.env.REACT_APP_API_URL || BASE_API;   // ✅ UPDATED
 
   const GOOGLE_SCRIPT_URL =
     "https://script.google.com/macros/s/AKfycbx5ZzcRCr2VntmZ_F8h9jhccxguG8IVZWGIqDTp0MPqoRROwzbeZVToFUXJpYE97OeC/exec";
