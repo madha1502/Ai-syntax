@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./Round1.css";
 import { useNavigate } from "react-router-dom";
+import { API as BASE_API } from "../api";   // ✅ ADDED
 
 function Round1() {
   const navigate = useNavigate();
@@ -9,7 +10,7 @@ function Round1() {
   const [roundLocked, setRoundLocked] = useState(true);
 
   // ===== BASE URL (Proxy OR ENV) =====
-  const API = process.env.REACT_APP_API_URL || "";
+  const API = process.env.REACT_APP_API_URL || BASE_API;   // ✅ UPDATED
 
   /* ================= PARTICLE BACKGROUND ================= */
 
