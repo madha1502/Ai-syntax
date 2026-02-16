@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./Round3.css";
 import { useNavigate } from "react-router-dom";
+import { API as BASE_API } from "../api";   // ✅ ADDED
 
 function Round3() {
 
@@ -15,7 +16,7 @@ function Round3() {
   const [uploading, setUploading] = useState(false);
 
   // ===== BASE URL (Proxy OR ENV) =====
-  const API = process.env.REACT_APP_API_URL || "";
+  const API = process.env.REACT_APP_API_URL || BASE_API;   // ✅ UPDATED
 
   const GOOGLE_SCRIPT_URL =
     "https://script.google.com/macros/s/AKfycbx5ZzcRCr2VntmZ_F8h9jhccxguG8IVZWGIqDTp0MPqoRROwzbeZVToFUXJpYE97OeC/exec";
