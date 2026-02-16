@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { API } from "../api";   // ✅ ADDED
 
 function Leaderboard() {
   const [teams, setTeams] = useState([]);
 
   useEffect(() => {
     const apiUrl =
-      process.env.REACT_APP_API_URL || ""; 
+      process.env.REACT_APP_API_URL || API;   // ✅ UPDATED
 
     const eventSource = new EventSource(
       `${apiUrl}/api/leaderboard/live`
