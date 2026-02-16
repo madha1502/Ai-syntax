@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./admin.css";
+import { API as BASE_API } from "../api";   // ✅ ADDED
 
 function AdminPanel() {
 
@@ -20,7 +21,7 @@ function AdminPanel() {
   const [page, setPage] = useState(1);
 
   /* ===== BASE URL (Proxy OR ENV) ===== */
-  const API = process.env.REACT_APP_API_URL || "";
+  const API = process.env.REACT_APP_API_URL || BASE_API;   // ✅ UPDATED
 
   /* ================= LIVE SSE ================= */
 
