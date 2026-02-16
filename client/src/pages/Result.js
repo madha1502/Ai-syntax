@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { API as BASE_API } from "../api";   // ✅ ADDED
 
 function Result() {
   const navigate = useNavigate();
@@ -11,7 +12,7 @@ function Result() {
   const [submitted, setSubmitted] = useState(false);
 
   // ===== BASE URL (Proxy OR ENV) =====
-  const API = process.env.REACT_APP_API_URL || "";
+  const API = process.env.REACT_APP_API_URL || BASE_API;   // ✅ UPDATED
 
   /* ================= IMAGE SELECT ================= */
 
