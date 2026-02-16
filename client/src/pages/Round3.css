@@ -1,0 +1,67 @@
+.round3-container{
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+
+  background: url("../assets/bg55.png") center/cover no-repeat;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;   /* 🔥 space between items */
+}
+
+/* ===== TITLE ===== */
+.title{
+  font-size: 48px;
+  letter-spacing: 6px;
+  color: white;
+  text-shadow: 0 0 10px #fff;
+}
+
+/* ===== TAGLINE ===== */
+.tagline{
+  font-size: 28px;
+  color: #fff;
+  text-shadow: 0 0 15px white;
+}
+
+/* ===== BUTTON GROUP ===== */
+.btn-group{
+  display:flex;
+  gap:25px;
+  margin-top:20px;
+}
+
+/* ===== CLOSE PORTAL BUTTON ===== */
+.login-btn{
+  margin-top:30px;
+  padding:14px 40px;
+  border:2px solid white;
+  border-radius:10px;
+  font-size:20px;
+  color:white;
+  background:transparent;
+  box-shadow:0 0 20px white;
+}
+/* ================= CONFETTI ================= */
+
+.confetti {
+  position: fixed;
+  width: 10px;
+  height: 16px;
+  z-index: 9999;
+  opacity: 0.9;
+  animation: fall linear forwards;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(-10vh) rotate(0deg);
+  }
+  100% {
+    transform: translateY(110vh) rotate(720deg);
+  }
+}

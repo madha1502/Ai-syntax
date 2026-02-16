@@ -1,0 +1,142 @@
+import React, { useEffect, useRef, useState } from "react";
+import "./Round1.css";
+
+function Round1() {
+
+  const canvasRef = useRef(null);
+  const [prompt, setPrompt] = useState("");
+  const [showPopup, setShowPopup] = useState(false);
+
+  /* ================= PARTICLE ANIMATION ================= */
+
+  useEffect(() => {
+
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let particles = [];
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2 + 1;
+        this.speed = Math.random() * 0.4 + 0.2;
+        this.opacity = Math.random();
+      }
+
+      update() {
+        this.y -= this.speed;
+        if (this.y < 0) {
+          this.y = canvas.height;
+          this.x = Math.random() * canvas.width;
+        }
+      }
+
+      draw() {
+        ctx.fillStyle = `rgba(255,40,40,${this.opacity})`;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    for (let i = 0; i < 350; i++) {
+      particles.push(new Particle());
+    }
+
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach((p) => {
+        p.update();
+        p.draw();
+      });
+      requestAnimationFrame(animate);
+    };
+
+    animate();
+
+    window.addEventListener("resize", () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+
+  }, []);
+
+  /* ================= GENERATE ================= */
+
+  const generate = () => {
+    if (!prompt.trim()) {
+      alert("Enter a prompt");
+      return;
+    }
+
+    sessionStorage.setItem("lastPrompt", prompt);
+    setShowPopup(true);
+
+    // Confetti effect
+    for (let i = 0; i < 80; i++) {
+      const conf = document.createElement("div");
+      conf.className = "confetti";
+      conf.style.left = Math.random() * 100 + "vw";
+      conf.style.top = "-20px";
+      conf.style.background = `hsl(${Math.random() * 360},100%,50%)`;
+      conf.style.animationDuration = Math.random() * 2 + 1 + "s";
+      document.body.appendChild(conf);
+
+      setTimeout(() => conf.remove(), 2500);
+    }
+  };
+
+  return (
+    <div className="round1-container">
+
+      <canvas ref={canvasRef}></canvas>
+
+      <button className="login-btn" onClick={generate}>
+        Generate
+      </button>
+
+      <div className="logo">
+        <div className="line"></div>
+        <div className="title">ROUND 1</div>
+        <div className="line"></div>
+      </div>
+
+      <div className="tagline">
+        THEME : STRANGER THINGS
+      </div>
+
+      <div className="prompt-box">
+        <label className="prompt-label">
+          TYPE YOUR PROMPT
+        </label>
+        <textarea
+          value={prompt}
+          onChange={(e) => setPrompt(e.target.value)}
+          placeholder="Save Hawkins From Danger..."
+        />
+      </div>
+
+      {showPopup && (
+        <div className="popup-overlay">
+          <div className="blast-bg"></div>
+          <div className="popup-box">
+            <h2>Unlocked</h2>
+            <h2>DUSTIN , STEVE HARINGTON</h2>
+            <p>The gate is opening...</p>
+            <button onClick={() => setShowPopup(false)}>
+              Enter Upside Down
+            </button>
+          </div>
+        </div>
+      )}
+
+    </div>
+  );
+}
+
+export default Round1;
