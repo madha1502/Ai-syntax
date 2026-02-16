@@ -7,7 +7,7 @@ import { API as BASE_API } from "../api";   // ✅ ADDED
 
 function Round2() {
 
-  const canvasRef = useRef(null);
+  //const canvasRef = useRef(null);
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
 

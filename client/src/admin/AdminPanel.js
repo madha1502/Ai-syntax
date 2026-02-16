@@ -6,7 +6,7 @@ import { API as BASE_API } from "../api";   // ✅ ADDED
 function AdminPanel() {
 
   const navigate = useNavigate();
-  const [fraudData, setFraudData] = useState([]);
+  //const [fraudData, setFraudData] = useState([]);
   const [teams, setTeams] = useState([]);
   const [stats, setStats] = useState({
     totalUsers: 0,
