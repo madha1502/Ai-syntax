@@ -3,11 +3,10 @@ import "./Round2.css";
 import { useNavigate } from "react-router-dom";
 import logoLeft from "../assets/de1.png";
 import logoRight from "../assets/dee1.png";
-import { API as BASE_API } from "../api";   // ✅ ADDED
+import { API as BASE_API } from "../api";
 
 function Round2() {
 
-  //const canvasRef = useRef(null);
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
 
@@ -17,8 +16,7 @@ function Round2() {
   const [popupText, setPopupText] = useState("");
   const [uploading, setUploading] = useState(false);
 
-  // ===== BASE URL (Proxy OR ENV) =====
-  const API = process.env.REACT_APP_API_URL || BASE_API;   // ✅ UPDATED
+  const API = process.env.REACT_APP_API_URL || BASE_API;
 
   const GOOGLE_SCRIPT_URL =
     "https://script.google.com/macros/s/AKfycbx5ZzcRCr2VntmZ_F8h9jhccxguG8IVZWGIqDTp0MPqoRROwzbeZVToFUXJpYE97OeC/exec";
@@ -31,27 +29,18 @@ function Round2() {
         console.log("ROUND DATA:", data);
         setRoundLocked(data.round2Locked);
       })
-      .catch(() => {
-        alert("Server connect aagala da 🤡 Backend start pannuda!");
-      });
+      .catch(() => alert("Backend connect aagala 🤡"));
   }, [API]);
 
-  /* ================= AUTO REFRESH ROUND STATUS ================= */
+  /* ================= AUTO REFRESH ================= */
   useEffect(() => {
-
     const interval = setInterval(() => {
-
       fetch(`${API}/api/round`)
         .then(r => r.json())
-        .then(data => {
-          console.log("🔄 Updated Round:", data);
-          setRoundLocked(data.round2Locked);
-        });
-
+        .then(data => setRoundLocked(data.round2Locked));
     }, 5000);
 
     return () => clearInterval(interval);
-
   }, [API]);
 
   /* ================= NEXT ROUND ================= */
@@ -61,10 +50,9 @@ function Round2() {
       const data = await res.json();
 
       if (data.currentRound < 3)
-        return alert("Round 3 not started yet da 😭 Admin start pannattum");
+        return alert("Round 3 not started yet da 😭");
 
       navigate("/round3");
-
     } catch {
       alert("Server error da 🤡");
     }
@@ -73,7 +61,7 @@ function Round2() {
   /* ================= UPLOAD BUTTON ================= */
   const upload = () => {
     if (roundLocked)
-      return alert("Round 2 locked da 😭 Admin unlock pannunga");
+      return alert("Round 2 locked da 😭");
 
     fileInputRef.current.click();
   };
@@ -85,7 +73,15 @@ function Round2() {
     if (!file) return;
 
     if (!file.type.startsWith("audio/"))
-      return alert("MP3 mattum upload pannuda DJ 😂");
+      return alert("MP3 mattum upload pannuda 😂");
+
+    const teamId = localStorage.getItem("teamId");
+
+    if (!teamId) {
+      alert("Login pannala da 😭");
+      navigate("/");
+      return;
+    }
 
     setPopupVisible(true);
     setPopupTitle("Uploading...");
@@ -93,7 +89,6 @@ function Round2() {
     setUploading(true);
 
     try {
-
       const reader = new FileReader();
 
       reader.onload = async function (event) {
@@ -123,21 +118,21 @@ function Round2() {
             driveData.link;
 
           if (!driveLink || !driveLink.startsWith("http"))
-            throw new Error("Apps Script file link kudukkala da 😭");
+            throw new Error("Drive upload failed 😭");
 
           console.log("Drive Link:", driveLink);
+          console.log("TEAM ID:", teamId);
 
-          const teamId = localStorage.getItem("teamId");
-
-          if (!teamId)
-            throw new Error("Login pannala da 😭");
-
+          /* ✅ CORRECT API HERE */
           const backendRes = await fetch(
-            `${API}/api/submission/submit`,
+            `${API}/api/submission/round2`,
             {
               method: "POST",
               headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ teamId, fileUrl: driveLink })
+              body: JSON.stringify({
+                teamId,
+                fileUrl: driveLink
+              })
             }
           );
 
@@ -160,7 +155,6 @@ function Round2() {
       };
 
       reader.readAsDataURL(file);
-
     } catch (err) {
       console.error(err);
       setPopupTitle("Upload Failed ❌");
@@ -181,7 +175,6 @@ function Round2() {
       </div>
 
       <div className="btn-group">
-
         <button className="btn" onClick={upload} disabled={uploading}>
           ⬇ Upload MP3
         </button>
@@ -189,7 +182,6 @@ function Round2() {
         <button className="btn" onClick={goNextRound}>
           ➡ Next Round
         </button>
-
       </div>
 
       <div className="quote">
