@@ -145,11 +145,11 @@ function AdminPanel() {
     }
   };
 
-  useEffect(() => {
-    fetch(`${API}/api/admin/fraud-report`)
-      .then(res => res.json())
-      .then(setFraudData);
-  }, [API]);
+  // useEffect(() => {
+  //   fetch(`${API}/api/admin/fraud-report`)
+  //     .then(res => res.json())
+  //     .then(setFraudData);
+  // }, [API]);
 
   /* ================= UI ================= */
 
